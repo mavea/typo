@@ -156,7 +156,7 @@ func getElementForTestUint8(num int) (testStructure, bool) {
 		return newTest(num, `pointer []int{4, 3} conversion test`, toTest(ToUint8(arrayBool)), ToUint8Value(arrayBool), uint8(0), errors.New(`[2]bool format cannot be converted to uint8`))
 	case 4:
 		var f float64 = math.Pi + float64(987654318.0)
-		return newTest(num, `simple pi+ conversion test`, toTest(ToUint8(f)), ToUint8Value(f), uint8(f), nil)
+		return newTest(num, `simple pi+ conversion test`, toTest(ToUint8(f)), ToUint8Value(f), uint8(0), errors.New(`the passed value is not in the range of the uint8 data type`))
 
 	}
 
