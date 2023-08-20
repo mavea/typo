@@ -31,6 +31,9 @@ func toTree(value reflect.Value, result reflect.Value) error {
 		if nil != err {
 			return err
 		}
+		if -2147483648 > i64 || 2147483647 < i64 {
+			return errors.New(`the passed value is not in the range of the int data type`)
+		}
 		i := int(i64)
 		result.Set(reflect.ValueOf(i))
 
@@ -39,6 +42,9 @@ func toTree(value reflect.Value, result reflect.Value) error {
 		i64, err := toInt64(value, reflect.Int8)
 		if nil != err {
 			return err
+		}
+		if -128 > i64 || 127 < i64 {
+			return errors.New(`the passed value is not in the range of the int8 data type`)
 		}
 		i8 := int8(i64)
 		result.Set(reflect.ValueOf(i8))
@@ -49,6 +55,9 @@ func toTree(value reflect.Value, result reflect.Value) error {
 		if nil != err {
 			return err
 		}
+		if -32768 > i64 || 32767 < i64 {
+			return errors.New(`the passed value is not in the range of the int16 data type`)
+		}
 		i16 := int16(i64)
 		result.Set(reflect.ValueOf(i16))
 
@@ -57,6 +66,9 @@ func toTree(value reflect.Value, result reflect.Value) error {
 		i64, err := toInt64(value, reflect.Int32)
 		if nil != err {
 			return err
+		}
+		if -2147483648 > i64 || 2147483647 < i64 {
+			return errors.New(`the passed value is not in the range of the int32 data type`)
 		}
 		i32 := int32(i64)
 		result.Set(reflect.ValueOf(i32))
@@ -67,6 +79,9 @@ func toTree(value reflect.Value, result reflect.Value) error {
 		if nil != err {
 			return err
 		}
+		if -9223372036854775808 > i64 || 9223372036854775807 < i64 {
+			return errors.New(`the passed value is not in the range of the int64 data type`)
+		}
 		result.Set(reflect.ValueOf(i64))
 
 		return nil
@@ -74,6 +89,9 @@ func toTree(value reflect.Value, result reflect.Value) error {
 		ui64, err := toUint64(value, reflect.Uint)
 		if nil != err {
 			return err
+		}
+		if 4294967295 < ui64 {
+			return errors.New(`the passed value is not in the range of the uint data type`)
 		}
 		ui := uint(ui64)
 		result.Set(reflect.ValueOf(ui))
@@ -84,6 +102,9 @@ func toTree(value reflect.Value, result reflect.Value) error {
 		if nil != err {
 			return err
 		}
+		if 255 < ui64 {
+			return errors.New(`the passed value is not in the range of the uint8 data type`)
+		}
 		ui8 := uint8(ui64)
 		result.Set(reflect.ValueOf(ui8))
 
@@ -92,6 +113,9 @@ func toTree(value reflect.Value, result reflect.Value) error {
 		ui64, err := toUint64(value, reflect.Uint16)
 		if nil != err {
 			return err
+		}
+		if 65535 < ui64 {
+			return errors.New(`the passed value is not in the range of the uint16 data type`)
 		}
 		ui16 := uint16(ui64)
 		result.Set(reflect.ValueOf(ui16))
@@ -102,6 +126,9 @@ func toTree(value reflect.Value, result reflect.Value) error {
 		if nil != err {
 			return err
 		}
+		if 4294967295 < ui64 {
+			return errors.New(`the passed value is not in the range of the uint32 data type`)
+		}
 		ui32 := uint32(ui64)
 		result.Set(reflect.ValueOf(ui32))
 
@@ -110,6 +137,9 @@ func toTree(value reflect.Value, result reflect.Value) error {
 		ui64, err := toUint64(value, reflect.Uint64)
 		if nil != err {
 			return err
+		}
+		if 18446744073709551615 < ui64 {
+			return errors.New(`the passed value is not in the range of the uint64 data type`)
 		}
 		result.Set(reflect.ValueOf(ui64))
 
@@ -402,15 +432,21 @@ func toTree(value reflect.Value, result reflect.Value) error {
 // ToType converts the passed value of undefined type to the specified type. If translation fails, returns default value and error message
 //
 // Is a synonym for the function To
-func ToType[T any](value any) (result T, err error) {
-	err = toTree(reflect.ValueOf(value), reflect.ValueOf(&result))
+func ToType[typeResult any](value any) (result typeResult, err error) {
+	if err = toTree(reflect.ValueOf(value), reflect.ValueOf(&result).Elem()); nil != err {
+		var r typeResult
+		return r, err
+	}
 
 	return result, err
 }
 
 // To converts the passed value of undefined type to the specified type. If translation fails, returns default value and error message
-func To[T any](value any) (result T, err error) {
-	err = toTree(reflect.ValueOf(value), reflect.ValueOf(&result))
+func To[typeResult any](value any) (result typeResult, err error) {
+	if err = toTree(reflect.ValueOf(value), reflect.ValueOf(&result).Elem()); nil != err {
+		var r typeResult
+		return r, err
+	}
 
 	return result, err
 }
@@ -419,17 +455,23 @@ func To[T any](value any) (result T, err error) {
 //
 // Is a synonym for the function ToValue
 // The conversion goes up to the first element whose type cast resulted in an error.
-func ToTypeValue[T any](value any) (to T) {
-	_ = toTree(reflect.ValueOf(value), reflect.ValueOf(&to))
+func ToTypeValue[typeResult any](value any) (result typeResult) {
+	if err := toTree(reflect.ValueOf(value), reflect.ValueOf(&result).Elem()); nil != err {
+		var r typeResult
+		return r
+	}
 
-	return to
+	return result
 }
 
 // ToValue converts the passed value of undefined type to the specified type. If translation fails, returns default value and error message
 //
 // The conversion goes up to the first element whose type cast resulted in an error.
-func ToValue[T any](value any) (to T) {
-	_ = toTree(reflect.ValueOf(value), reflect.ValueOf(&to))
+func ToValue[typeResult any](value any) (result typeResult) {
+	if err := toTree(reflect.ValueOf(value), reflect.ValueOf(&result).Elem()); nil != err {
+		var r typeResult
+		return r
+	}
 
-	return to
+	return result
 }

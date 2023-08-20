@@ -177,6 +177,10 @@ func getElementForTestType(num int) (testStructure, bool) {
 		return newTest(num, `simple map[string]interface{} -> [5]string conversion test`, toTest(To[[5]string](mapStringInterface)), ToValue[[5]string](mapStringInterface), [5]string{"b", "1", "2", "3", ""}, nil) // @todo не постоянные тесты. лучше держать выключеными
 	case 44:
 		return newTest(num, `simple []int -> complex64 conversion test`, toTest(To[complex64]([]int{1, 2})), ToValue[complex64]([]int{1, 2}), complex(1, 2), nil) //@todo json не работает с complex64
+	case 45:
+		return newTest(num, `simple ToType []int{1, 2, 9} -> []string conversion test`, toTest(ToType[[]string]([]int{1, 2, 9})), ToTypeValue[[]string]([]int{1, 2, 9}), []string{`1`, `2`, `9`}, nil)
+	case 46:
+		return newTest(num, `simple string -> int conversion test`, toTest(ToType[int](`123`)), ToTypeValue[int](`123`), 123, nil)
 	}
 	return testStructure{}, false
 }
