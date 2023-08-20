@@ -7,28 +7,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[/](..%2F..%2FREADME.ru.md) bool
 
 ---
-<style>
-table {
-    padding: 0;
-    margin: 0;
-}
-td {
-    padding: 0;
-    vertical-align: top;
-}
-th {
-    vertical-align: top;
-    text-align: left;
-    padding: 0;
-}
-tr {
-    padding: 0;
-    margin: 0;
-}
-td div {
-    text-align: right;
-}
-</style>
+
 
 ## Функция преобразования в Bool
 

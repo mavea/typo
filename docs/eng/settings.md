@@ -8,28 +8,7 @@
 
 ---
 
-<style>
-table {
-    padding: 0;
-    margin: 0;
-}
-td {
-    padding: 0;
-    vertical-align: top;
-}
-th {
-    vertical-align: top;
-    text-align: left;
-    padding: 0;
-}
-tr {
-    padding: 0;
-    margin: 0;
-}
-td div {
-    text-align: right;
-}
-</style>
+
 
 ## Function indicating which word to display null as a string
 

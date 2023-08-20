@@ -7,28 +7,7 @@
 
 ---
 
-<style>
-table {
-    padding: 0;
-    margin: 0;
-}
-td {
-    padding: 0;
-    vertical-align: top;
-}
-th {
-    vertical-align: top;
-    text-align: left;
-    padding: 0;
-}
-tr {
-    padding: 0;
-    margin: 0;
-}
-td div {
-    text-align: right;
-}
-</style>
+
 
 ## Basic type conversion function
 
