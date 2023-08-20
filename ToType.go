@@ -8,6 +8,9 @@ import (
 // toTree converts the value passed in Reflect.Value to the specified type passed as Reflect.Value. If translation fails, returns default value and error message
 func toTree(value reflect.Value, result reflect.Value) error {
 	if !value.IsValid() {
+		if reflect.String == result.Kind() {
+			result.Set(reflect.ValueOf(writeNullInString))
+		}
 		return nil
 	}
 	typeResult := result.Type()

@@ -21,6 +21,11 @@ type testResultFunction struct {
 	Err    error
 }
 
+type testListStructure struct {
+	Name           string                          `json:"name"`
+	FuncionGetList func(int) (testStructure, bool) `json:"funcion-get-list"`
+}
+
 func toTest(value any, err error) testResultFunction {
 	return testResultFunction{
 		Result: value,
@@ -37,11 +42,6 @@ func newTest(i int, name string, toValueAndErr testResultFunction, toValue any, 
 		ExpectedResult: expectedResult,
 		ExpectedErr:    expectedErr,
 	}, true
-}
-
-type testListStructure struct {
-	Name           string                          `json:"name"`
-	FuncionGetList func(int) (testStructure, bool) `json:"funcion-get-list"`
 }
 
 func echoAboutRunGroupTests(t *testing.T, text string) {
@@ -140,4 +140,84 @@ func testByLists(t *testing.T, funcionsGetList []testListStructure) {
 	} else {
 		t.Error("\x1b[31m ✖ \x1b[0m" + ` functions that should produce test cases were not provided to the list tester`)
 	}
+}
+
+func getElementForSetStringToWriteNull(num int) (testStructure, bool) {
+	switch num {
+	case 0:
+		return newTest(num, `simple nil conversion test`, toTest(ToString([]*string{nil})), ToStringValue([]*string{nil}), `null`, nil)
+	case 1:
+		SetStringToWriteNull(`nils`)
+		return newTest(num, `simple null conversion test`, toTest(ToString(nil)), ToStringValue(nil), `nils`, nil)
+	case 2:
+		SetStringToWriteNull(`null`)
+		return newTest(num, `simple repeat nil conversion test`, toTest(To[string](nil)), ToValue[string](nil), `null`, nil)
+	}
+
+	return testStructure{}, false
+}
+
+func TestSetStringToWriteNull(t *testing.T) {
+	testByLists(t, []testListStructure{
+		{
+			Name:           `Personal tests`,
+			FuncionGetList: getElementForSetStringToWriteNull,
+		},
+	})
+}
+
+func getElementForSetStructureTagContainingNameTheElementJson(num int) (testStructure, bool) {
+	type testsStruct struct {
+		Name string `json:"name" tag:"newName"`
+	}
+	ms := map[string]string{`name`: `Josh`, `newName`: `Mike`}
+	switch num {
+	case 0:
+		return newTest(num, `simple tag "json" conversion test`, toTest(To[testsStruct](ms)), ToValue[testsStruct](ms), testsStruct{Name: `Josh`}, nil)
+	case 1:
+		SetStructureTagContainingNameTheElementJson(`tag`)
+		return newTest(num, `simple tag "tag" conversion test`, toTest(To[testsStruct](ms)), ToValue[testsStruct](ms), testsStruct{Name: `Mike`}, nil)
+	case 2:
+		SetStructureTagContainingNameTheElementJson(`json`)
+		return newTest(num, `simple repeat tag "json" conversion test`, toTest(To[testsStruct](ms)), ToValue[testsStruct](ms), testsStruct{Name: `Josh`}, nil)
+	}
+
+	return testStructure{}, false
+}
+
+func TestSetStructureTagContainingNameTheElementJson(t *testing.T) {
+	testByLists(t, []testListStructure{
+		{
+			Name:           `Personal tests`,
+			FuncionGetList: getElementForSetStructureTagContainingNameTheElementJson,
+		},
+	})
+}
+
+func getElementForSetSpecialStringsInStructureTag(num int) (testStructure, bool) {
+	type testsStruct struct {
+		Name string `json:"omitempty,name,-,omitempty,newName,-"`
+	}
+	ms := map[string]string{`name`: `Josh`, `newName`: `Mike`}
+	switch num {
+	case 0:
+		return newTest(num, `simple tag "json" conversion test`, toTest(To[testsStruct](ms)), ToValue[testsStruct](ms), testsStruct{Name: `Josh`}, nil)
+	case 1:
+		SetSpecialStringsInStructureTag([]string{`-`, `omitempty`, `name`})
+		return newTest(num, `simple new tag "json" conversion test`, toTest(To[testsStruct](ms)), ToValue[testsStruct](ms), testsStruct{Name: `Mike`}, nil)
+	case 2:
+		SetSpecialStringsInStructureTag([]string{`-`, `omitempty`})
+		return newTest(num, `simple repeat tag "json" conversion test`, toTest(To[testsStruct](ms)), ToValue[testsStruct](ms), testsStruct{Name: `Josh`}, nil)
+	}
+
+	return testStructure{}, false
+}
+
+func TestSetSpecialStringsInStructureTag(t *testing.T) {
+	testByLists(t, []testListStructure{
+		{
+			Name:           `Personal tests`,
+			FuncionGetList: getElementForSetSpecialStringsInStructureTag,
+		},
+	})
 }

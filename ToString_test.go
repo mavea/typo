@@ -108,7 +108,7 @@ func getElementForTestString(num int) (testStructure, bool) {
 		var elemNull *bool
 		return newTest(num, `pointer null variable conversion test`, toTest(ToString(&elemNull)), ToStringValue(&elemNull), `null`, nil)
 	case 35:
-		return newTest(num, `simple nil test`, toTest(ToString(nil)), ToStringValue(nil), ``, nil)
+		return newTest(num, `simple nil test`, toTest(ToString(nil)), ToStringValue(nil), `null`, nil)
 	case 36:
 		slice := []int{4, 3}
 		return newTest(num, `simple []int{4, 3} conversion test`, toTest(ToString(slice)), ToStringValue(slice), `4 3`, nil)

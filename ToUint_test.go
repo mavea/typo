@@ -205,15 +205,15 @@ func getElementForTestUint32(num int) (testStructure, bool) {
 		return newTest(num, `simple 2147483647 conversion test`, toTest(ToUint32(2147483647)), ToUint32Value(2147483647), uint32(2147483647), nil)
 	case 1:
 		return newTest(num, `simple -2147483648 conversion test`, toTest(ToUint32(-2147483648)), ToUint32Value(-2147483648), uint32(0), errors.New(`uint32 cannot be negative`))
-	case 4:
+	case 2:
 		var f float64 = math.Pi + float64(987654318.0)
 		return newTest(num, `simple pi+ conversion test`, toTest(ToUint32(f)), ToUint32Value(f), uint32(f), nil)
-	case 5:
+	case 3:
 		return newTest(num, `simple []int{} conversion test`, toTest(ToUint32([]int{})), ToUint32Value([]int{}), uint32(0), errors.New(`[]int format cannot be converted to uint32`))
-	case 6:
+	case 4:
 		arrayBool := [2]string{"true", "false"}
 		return newTest(num, `simple [2]string{} conversion test`, toTest(ToUint32(arrayBool)), ToUint32Value(arrayBool), uint32(0), errors.New(`[2]string format cannot be converted to uint32`))
-	case 7:
+	case 5:
 		arrayBool := [2]string{"true", "false"}
 		return newTest(num, `pointer [2]string{} conversion test`, toTest(ToUint32(arrayBool)), ToUint32Value(arrayBool), uint32(0), errors.New(`[2]string format cannot be converted to uint32`))
 	}

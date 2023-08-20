@@ -46,6 +46,9 @@ func searchNameInStructureTag(tag string) string {
 	var temp string
 	for i := 0; i < len(sliceString); i++ {
 		temp = strings.TrimSpace(sliceString[i])
+		if `` == temp {
+			continue
+		}
 		if !inSpecialStringsInStructureTag(temp) {
 			return temp
 		}
