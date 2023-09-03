@@ -2,6 +2,22 @@ package typo
 
 import "strings"
 
+const MinInt int64 = -2147483648
+const MaxInt int64 = 2147483647
+const MinInt8 int64 = -128
+const MaxInt8 int64 = 127
+const MinInt16 int64 = -32768
+const MaxInt16 int64 = 32767
+const MinInt32 int64 = -2147483648
+const MaxInt32 int64 = 2147483647
+const MinInt64 int64 = -9223372036854775808
+const MaxInt64 int64 = 9223372036854775807
+const MaxUint uint64 = 4294967295
+const MaxUint8 uint64 = 255
+const MaxUint16 uint64 = 65535
+const MaxUint32 uint64 = 4294967295
+const MaxUint64 uint64 = 18446744073709551615
+
 // specialStringsInStructureTag service words in a structure tag that are not a name
 var specialStringsInStructureTag = []string{`-`, `omitempty`}
 
