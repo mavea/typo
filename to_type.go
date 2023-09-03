@@ -34,7 +34,7 @@ func toTree(value reflect.Value, result reflect.Value) error {
 		if nil != err {
 			return err
 		}
-		if -2147483648 > i64 || 2147483647 < i64 {
+		if MinInt > i64 || MaxInt < i64 {
 			return errors.New(`the passed value is not in the range of the int data type`)
 		}
 		i := int(i64)
@@ -46,7 +46,7 @@ func toTree(value reflect.Value, result reflect.Value) error {
 		if nil != err {
 			return err
 		}
-		if -128 > i64 || 127 < i64 {
+		if MinInt8 > i64 || MaxInt8 < i64 {
 			return errors.New(`the passed value is not in the range of the int8 data type`)
 		}
 		i8 := int8(i64)
@@ -58,7 +58,7 @@ func toTree(value reflect.Value, result reflect.Value) error {
 		if nil != err {
 			return err
 		}
-		if -32768 > i64 || 32767 < i64 {
+		if MinInt16 > i64 || MaxInt16 < i64 {
 			return errors.New(`the passed value is not in the range of the int16 data type`)
 		}
 		i16 := int16(i64)
@@ -70,7 +70,7 @@ func toTree(value reflect.Value, result reflect.Value) error {
 		if nil != err {
 			return err
 		}
-		if -2147483648 > i64 || 2147483647 < i64 {
+		if MinInt32 > i64 || MaxInt32 < i64 {
 			return errors.New(`the passed value is not in the range of the int32 data type`)
 		}
 		i32 := int32(i64)
@@ -82,7 +82,7 @@ func toTree(value reflect.Value, result reflect.Value) error {
 		if nil != err {
 			return err
 		}
-		if -9223372036854775808 > i64 || 9223372036854775807 < i64 {
+		if MinInt64 > i64 || MaxInt64 < i64 {
 			return errors.New(`the passed value is not in the range of the int64 data type`)
 		}
 		result.Set(reflect.ValueOf(i64))
@@ -93,7 +93,7 @@ func toTree(value reflect.Value, result reflect.Value) error {
 		if nil != err {
 			return err
 		}
-		if 4294967295 < ui64 {
+		if MaxUint < ui64 {
 			return errors.New(`the passed value is not in the range of the uint data type`)
 		}
 		ui := uint(ui64)
@@ -105,7 +105,7 @@ func toTree(value reflect.Value, result reflect.Value) error {
 		if nil != err {
 			return err
 		}
-		if 255 < ui64 {
+		if MaxUint8 < ui64 {
 			return errors.New(`the passed value is not in the range of the uint8 data type`)
 		}
 		ui8 := uint8(ui64)
@@ -117,7 +117,7 @@ func toTree(value reflect.Value, result reflect.Value) error {
 		if nil != err {
 			return err
 		}
-		if 65535 < ui64 {
+		if MaxUint16 < ui64 {
 			return errors.New(`the passed value is not in the range of the uint16 data type`)
 		}
 		ui16 := uint16(ui64)
@@ -129,7 +129,7 @@ func toTree(value reflect.Value, result reflect.Value) error {
 		if nil != err {
 			return err
 		}
-		if 4294967295 < ui64 {
+		if MaxUint32 < ui64 {
 			return errors.New(`the passed value is not in the range of the uint32 data type`)
 		}
 		ui32 := uint32(ui64)
@@ -141,7 +141,7 @@ func toTree(value reflect.Value, result reflect.Value) error {
 		if nil != err {
 			return err
 		}
-		if 18446744073709551615 < ui64 {
+		if MaxUint64 < ui64 {
 			return errors.New(`the passed value is not in the range of the uint64 data type`)
 		}
 		result.Set(reflect.ValueOf(ui64))
